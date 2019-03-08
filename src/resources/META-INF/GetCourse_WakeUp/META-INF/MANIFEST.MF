@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Class-Path: jna-4.4.0.jar poi-4.0.1.jar junit-4.12.jar jsoup-1.11.3.ja
+ r ezmorph-1.0.3.jar curvesapi-1.05.jar httpmime-4.5.6.jar jaxb-api-2.
+ 3.0.jar xmlbeans-3.0.2.jar commons-logging.jar fluent-hc-4.5.6.jar ht
+ tpcore-4.4.10.jar poi-ooxml-4.0.1.jar activation-1.1.1.jar commons-la
+ ng-2.5.jar httpclient-4.5.6.jar jaxb-core-2.3.0.1.jar jaxb-impl-2.3.0
+ .1.jar commons-codec-1.10.jar commons-codec-1.11.jar jna-platform-4.4
+ .0.jar json-lib-2.1-jdk15.jar poi-examples-4.0.1.jar poi-excelant-4.0
+ .1.jar commons-logging-1.2.jar commons-math3-3.6.1.jar httpclient-win
+ -4.5.6.jar poi-scratchpad-4.0.1.jar commons-compress-1.18.jar httpcli
+ ent-cache-4.5.6.jar commons-beanutils-1.7.0.jar commons-collections-3
+ .1.jar poi-ooxml-schemas-4.0.1.jar collections-generic-4.01.jar commo
+ ns-collections4-4.2.jar commons-collections4-4.3.jar
+Main-Class: WakeUpTool.CoursesToWakeUpExecel
+
