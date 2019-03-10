@@ -1,6 +1,7 @@
 package UIMS;
 
 import HTTP.SSLClient;
+import UIMSTool.UIMSFetch;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.http.*;
@@ -94,39 +95,45 @@ public class UIMSApprove {
 //        System.out.println("url:\t" + url);
 //        System.out.println("key:\t" + key);
 
-        HttpPost httppost1 = new HttpPost(Address.hostAddress + "/ntms/");
-//        httppost1.setHeader("Cookie", "UM_distinctid=16758a03df86d6-05464bd3e66df4-6313363-144000-16758a03df937b");
-        CloseableHttpResponse response1 = null;
-        try {
-            response1 = httpclient.execute(httppost1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Header headers1[] =  response1.getHeaders("Set-Cookie");
-        if(headers1.length == 1){
-            try {
-                String str = headers1[0].getValue();
-                str = str.split(";")[0];
-                jssionID = str.split("=")[1];
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-                throw new RuntimeException("Get JSSIONID ERROR！");
-            }
-            finally {
-                try {
-                    response1.close();
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
+//        HttpPost httppost1 = new HttpPost(Address.hostAddress + "/ntms/");
+////        httppost1.setHeader("Cookie", "UM_distinctid=16758a03df86d6-05464bd3e66df4-6313363-144000-16758a03df937b");
+//        CloseableHttpResponse response1 = null;
+//        try {
+//            response1 = httpclient.execute(httppost1);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        Header headers1[] =  response1.getHeaders("Set-Cookie");
+//        if(headers1.length == 1){
+//            try {
+//                String str = headers1[0].getValue();
+//                str = str.split(";")[0];
+//                jssionID = str.split("=")[1];
+//            }
+//            catch (Exception e){
+//                System.out.println(e.getMessage());
+//                throw new RuntimeException("Get JSSIONID ERROR！");
+//            }
+//            finally {
+//                try {
+//                    response1.close();
+//                } catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        else{
+//            throw new RuntimeException ("ERROR: More then one! length: " + headers1.length);
+//        }
 
-        else{
-            throw new RuntimeException ("ERROR: More then one! length: " + headers1.length);
-        }
 
-//        System.out.println(jssionID);
+        UIMSFetch.getAHttpClient();
+        httpclient = UIMSFetch.get_httpClient;
+        jssionID = UIMSFetch.get_jssionID;
+
+        System.out.println(jssionID);
+
 
         String uid = "";
 
@@ -149,13 +156,16 @@ public class UIMSApprove {
         HttpPost httppost2 = new HttpPost(Address.hostAddress + "/ntms/j_spring_security_check");
 //        cookie1 =  "loginPage=userLogin.jsp; alu=" + user + "; pwdStrength=1; JSESSIONID=" + jssionID + " UM_distinctid=16758a03df86d6-05464bd3e66df4-6313363-144000-16758a03df937b";
         cookie1 =  "loginPage=userLogin.jsp; alu=" + user + "; pwdStrength=1; JSESSIONID=" + jssionID;
-        httppost2.setHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
+        httppost2.setHeader("User-Agent","Mozilla/5.0 (Windows NT 9.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36");
         httppost2.setHeader("Cookie",cookie1);
         httppost2.setEntity(entity);
         CloseableHttpResponse response2 = null;
         try {
             response2 = httpclient.execute(httppost2);
         } catch (IOException e) {
+            if(httpclient == null){
+                System.out.println("'httpclient' is NULL!");
+            }
             e.printStackTrace();
             throw new RuntimeException("Get UID response ERROR！");
         }
@@ -172,17 +182,10 @@ public class UIMSApprove {
                 System.out.println(e.getMessage());
                 throw new RuntimeException("Get JSSIONID2 ERROR！");
             }
-            finally {
-                try {
-                    response1.close();
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
         }
 
         else{
-            throw new RuntimeException ("ERROR: More then one! length: " + headers1.length);
+            throw new RuntimeException ("ERROR: More then one! length: " + headers2.length);
         }
 
         String result = null;
@@ -193,6 +196,12 @@ public class UIMSApprove {
             e.printStackTrace();
             System.out.println(e.getMessage());
             throw new RuntimeException("Get UID ERROR！");
+        } finally {
+            try {
+                response2.close();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         uid = result;

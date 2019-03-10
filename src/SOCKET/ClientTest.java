@@ -2,6 +2,7 @@ package SOCKET;
 
 import UIMS.Address;
 import UIMS.UIMSApprove;
+import UIMSTool.UIMSFetch;
 import net.sf.json.JSONObject;
 
 import java.io.*;
@@ -10,8 +11,11 @@ import java.net.Socket;
 
 public class ClientTest {
 
+    public static UIMSFetch uimsFetch = new UIMSFetch();
+
     public static void main(String args[]){
         new DateSynchronizationThread().start();
+        uimsFetch.start();
     }
 
     static class ClientThread extends Thread {
