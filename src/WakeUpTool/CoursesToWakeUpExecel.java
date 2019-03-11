@@ -3,6 +3,7 @@ package WakeUpTool;
 import UIMS.GetMD5;
 import UIMS.UIMSApprove;
 import UIMSTool.ClassSetConvert;
+import UIMSTool.UIMSFetch;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -16,6 +17,19 @@ import java.util.Scanner;
 public class CoursesToWakeUpExecel {
 
     public static void main(String[] args) {
+
+        new UIMSFetch().start();
+        System.out.println("准备中，请稍等...");
+
+        while(true){
+            if(UIMSFetch.has_ready) break;
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
         System.out.println("程序帮助您生成xlsx格式的课程表，方便您将已选课程导入WakeUp课程表.");
         System.out.println("WakeUp课程表下载地址：https://www.coolapk.com/apk/com.suda.yzune.wakeupschedule");
@@ -32,17 +46,17 @@ public class CoursesToWakeUpExecel {
             pass = args[1];
         }
         else{
-            user = "54160728";
-            pass = "040310";
+//            user = "54160728";
+//            pass = "040310";
 
             System.out.print("请输入您的教学号：");
-//            user = scanner.nextLine();
+            user = scanner.nextLine();
             while(user.length() != 8){
                 System.out.print("请输入您的8位【教学号】：");
                 user = scanner.nextLine();
             }
             System.out.print("请输入您的教务密码：");
-//            pass = scanner.nextLine();
+            pass = scanner.nextLine();
 
 //            System.out.println("login as : 54160907");
 
@@ -98,6 +112,8 @@ public class CoursesToWakeUpExecel {
         JSONObject classroom;
         String classroomName;
 
+        int row = 1;
+
         for (int i = 0; i < courses.size(); i++) {
 
             teachClassMaster = courses.getJSONObject(i).getJSONObject("teachClassMaster");
@@ -134,7 +150,7 @@ public class CoursesToWakeUpExecel {
                 System.out.println(courName + "\t" + dayOfWeek + "\t" + start_end[0] + "\t" + start_end[1] + "\t" + teacherName + "\t" + classroomName + "\t" + getWeeks(beginWeek, endWeek, weekOddEven));
 
                 strings = new String[]{courName, ""+dayOfWeek, ""+start_end[0], ""+start_end[1], teacherName, classroomName, getWeeks(beginWeek, endWeek, weekOddEven)};
-                createXSSFCell(xssfSheet, i+1, strings);
+                createXSSFCell(xssfSheet, row++, strings);
 
                 weekOddEven = "";
 

@@ -19,6 +19,7 @@ public class UIMSFetch extends Thread {
 
     public static CloseableHttpClient get_httpClient;
     public static String get_jssionID;
+    public static boolean has_ready = false;
 
     public static void getAHttpClient(){
 
@@ -97,12 +98,14 @@ public class UIMSFetch extends Thread {
                     }
                 }
             }
+            has_ready = true;
             System.out.println("Prepare finished!");
-            try {
-                sleep(30000);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+//            try {
+//                wait();
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+            break;
         }
     }
 
