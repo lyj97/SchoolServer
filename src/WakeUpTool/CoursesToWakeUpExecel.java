@@ -219,6 +219,8 @@ public class CoursesToWakeUpExecel {
         JSONObject classroom;
         String classroomName;
 
+        int row = 1;
+
         for (int i = 0; i < courses.size(); i++) {
 
             teachClassMaster = courses.getJSONObject(i).getJSONObject("teachClassMaster");
@@ -255,7 +257,7 @@ public class CoursesToWakeUpExecel {
                 System.out.println(courName + "\t" + dayOfWeek + "\t" + start_end[0] + "\t" + start_end[1] + "\t" + teacherName + "\t" + classroomName + "\t" + getWeeks(beginWeek, endWeek, weekOddEven));
 
                 strings = new String[]{courName, ""+dayOfWeek, ""+start_end[0], ""+start_end[1], teacherName, classroomName, getWeeks(beginWeek, endWeek, weekOddEven)};
-                createXSSFCell(xssfSheet, i+1, strings);
+                createXSSFCell(xssfSheet, row++, strings);
 
                 weekOddEven = "";
 

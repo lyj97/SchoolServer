@@ -1009,6 +1009,19 @@ public class UIMSApprove {
 
     public static void main(String args[]){
 
+        new UIMSFetch().start();
+        System.out.println("准备中，请稍等...");
+
+        while(true){
+            if(UIMSFetch.has_ready) break;
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
         String user = "54160907";
         String pass = "225577";
 
